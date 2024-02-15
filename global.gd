@@ -3,6 +3,9 @@ var bgcolor: Color = Color(0, 0.102, 0.2)
 var gridcolor: Color = Color(1, 0.502, 1)
 var gridbrightness: float = 1.0
 var vignette: bool = true
+var crt: bool = true
+var rain: bool = true
+var vhs: bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -13,7 +16,10 @@ func save_settings():
 		"bgcolor" : bgcolor.to_html(),
 		"gridcolor" : gridcolor.to_html(),
 		"gridbrightness" : gridbrightness,
-		"vignette" : vignette
+		"vignette" : vignette,
+		"crt" : crt,
+		"rain" : rain,
+		"vhs" : vhs
 	}
 		
 	var file = FileAccess.open("user://tate.dat", FileAccess.WRITE)
@@ -22,7 +28,7 @@ func save_settings():
 	
 func load_settings():
 	if not FileAccess.file_exists("user://tate.dat"):
-		print("no file")
+		print("no save file found")
 		return
 		
 	var file = FileAccess.open("user://tate.dat", FileAccess.READ)
@@ -34,6 +40,9 @@ func load_settings():
 		gridcolor = Color.from_string(data["gridcolor"], gridcolor)
 		gridbrightness = data["gridbrightness"] as float
 		vignette = data["vignette"] as bool
+		crt = data["crt"] as bool
+		rain = data["rain"] as bool
+		vhs = data["vhs"] as bool
 	else:
 		print("JSON Parse Error: ", json.get_error_message(), " in ", file.get_line(), " at line ", json.get_error_line())
 	
