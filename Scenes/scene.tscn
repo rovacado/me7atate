@@ -1,0 +1,191 @@
+[gd_scene load_steps=7 format=3 uid="uid://btirmxah8tlmy"]
+
+[ext_resource type="Script" path="res://Scenes/scene.gd" id="1_iuqya"]
+[ext_resource type="Shader" path="res://Shaders/Vaporwave_Grid.gdshader" id="1_vuy7k"]
+[ext_resource type="Shader" path="res://Shaders/vignette.gdshader" id="2_atpei"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7872"]
+shader = ExtResource("2_atpei")
+shader_parameter/vignette_intensity = 0.4
+shader_parameter/vignette_opacity = 0.5
+shader_parameter/vignette_rgb = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vb4k2"]
+shader = ExtResource("1_vuy7k")
+shader_parameter/brightness = 1.0
+shader_parameter/anchor = -0.5
+shader_parameter/speed_scale = 1.0
+shader_parameter/fov = 0.001
+shader_parameter/vertical_line_count = 1.0
+shader_parameter/background_color = Color(0, 0.101961, 0.2, 1)
+shader_parameter/grid_color = Color(1, 0.501961, 1, 1)
+
+[sub_resource type="Environment" id="Environment_lronk"]
+background_mode = 1
+background_color = Color(0, 0.101961, 0.2, 1)
+
+[node name="Scene" type="Node3D" node_paths=PackedStringArray("GridNode", "World")]
+script = ExtResource("1_iuqya")
+GridNode = NodePath("Grid/VaporGrid")
+World = NodePath("WorldEnvironment")
+
+[node name="Grid" type="CanvasLayer" parent="."]
+
+[node name="Vignette" type="CanvasLayer" parent="Grid"]
+
+[node name="sideshade" type="ColorRect" parent="Grid/Vignette"]
+material = SubResource("ShaderMaterial_r7872")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VaporGrid" type="ColorRect" parent="Grid"]
+material = SubResource("ShaderMaterial_vb4k2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 427.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+color = Color(0, 0, 0, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="UI"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 359.0
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Grid Color :"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "                        "
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Background Color :"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ColorPickerButton2" type="ColorPickerButton" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "                        "
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer"]
+layout_mode = 2
+text = "Grid Brightness: "
+
+[node name="HSlider" type="HSlider" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 0.001
+max_value = 2.0
+step = 0.0
+value = 1.0
+tick_count = 1
+ticks_on_borders = true
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+text = "Vignette Effect:"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CheckButton" type="CheckButton" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+button_pressed = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Save Settings"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button2" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "Load Default"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 0
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "Close"
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button4" type="Button" parent="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+text = "Delete Save"
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lronk")
+
+[connection signal="color_changed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/ColorPickerButton" to="." method="_on_color_picker_button_color_changed"]
+[connection signal="color_changed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2/ColorPickerButton2" to="." method="_on_color_picker_button_2_color_changed"]
+[connection signal="value_changed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer4/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
+[connection signal="toggled" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer6/CheckButton" to="." method="_on_check_box_toggled"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer3/Button2" to="." method="_on_button_2_pressed"]
+[connection signal="button_up" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Button3" to="." method="_on_button_3_button_up"]
+[connection signal="pressed" from="UI/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer5/Button4" to="." method="_on_button_4_pressed"]
