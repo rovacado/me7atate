@@ -10,10 +10,15 @@ config_version=5
 
 [application]
 
-config/name="Me7a"
+config/name="Me7a Background"
+config/description="Me7a Background"
+config/version="0.02"
 run/main_scene="res://Scenes/scene.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://icon.png"
 
 [autoload]
 
